@@ -5,10 +5,21 @@ import PresentationScreen from "./screens/presentation";
 import ScanScreen from "./screens/scan";
 import Test from "./screens/test";
 
+import { NavigationProp } from "@react-navigation/native";
 import Style from "./resources/style";
 const styles = Style();
 
-const NavStack = createNativeStackNavigator();
+
+export type RootStackParamList = {
+	Home: undefined;
+	Scan: undefined;
+	Result: { uwu: string };
+	ItemPresentation: { barcode: string };
+};
+
+export type StackNavigationProps = NavigationProp<RootStackParamList>;
+
+const NavStack = createNativeStackNavigator<RootStackParamList>();
 
 function RootStack() {
 	return (

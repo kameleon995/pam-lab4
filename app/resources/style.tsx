@@ -30,7 +30,7 @@ export default function Style() {
 			flex: 1,
 			alignItems: 'center',
 		},
-		text: {
+		flipCameraButtonText: {
 			fontSize: 24,
 			fontWeight: 'bold',
 			color: 'white',
