@@ -5,8 +5,8 @@ todo:
 V poprawa UI przyznania uprawnień (safeareaview)
 V implementacja skanowania kodów
 - skończyć implementować odpytywanie endpointu: 
-	* obsługa błędów pobrania danych
-	* obsługa braku dostępnych danych
+	V obsługa błędów pobrania danych
+	V obsługa braku dostępnych danych
 - zrobić UI prezentacji
 - zrobić home screen
 - wejście z klawiatury
