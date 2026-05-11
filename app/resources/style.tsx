@@ -44,7 +44,7 @@ export default function Style() {
 		},
 		// Presentation Screen Styles
 		scrollContentContainer: {
-			paddingBottom: 20,
+			paddingVertical: 20,
 		},
 		productImage: {
 			width: '100%',
@@ -95,6 +95,69 @@ export default function Style() {
 			color: 'white',
 			fontSize: 16,
 			fontWeight: '600',
+		},
+		// Image Loading Styles
+		imageLoadingContainer: {
+			position: 'relative',
+			width: '100%',
+			height: 250,
+			marginBottom: 20,
+			justifyContent: 'center',
+			alignItems: 'center',
+		},
+		imageSpinner: {
+			position: 'absolute',
+		},
+		// Keyboard Input Screen Styles
+		keyboardScreenContent: {
+			flex: 1,
+			justifyContent: 'center',
+			paddingHorizontal: 24,
+		},
+		keyboardCard: {
+			backgroundColor: '#ffffff',
+			borderRadius: 20,
+			padding: 24,
+			shadowColor: '#000',
+			shadowOpacity: 0.08,
+			shadowRadius: 18,
+			shadowOffset: { width: 0, height: 8 },
+			elevation: 4,
+		},
+		keyboardTitle: {
+			fontSize: 28,
+			fontWeight: '700',
+			color: '#111827',
+			marginBottom: 8,
+		},
+		keyboardSubtitle: {
+			fontSize: 15,
+			lineHeight: 22,
+			color: '#4b5563',
+			marginBottom: 18,
+		},
+		barcodeInput: {
+			borderWidth: 1,
+			borderColor: '#d1d5db',
+			borderRadius: 14,
+			paddingHorizontal: 16,
+			paddingVertical: 14,
+			fontSize: 18,
+			backgroundColor: '#f9fafb',
+			color: '#111827',
+		},
+		barcodeHint: {
+			marginTop: 10,
+			fontSize: 13,
+			color: '#6b7280',
+		},
+		barcodeError: {
+			marginTop: 10,
+			fontSize: 13,
+			color: '#b91c1c',
+		},
+		buttonSpacing: {
+			marginTop: 18,
 		},
 	});
 	return styles;

@@ -1,3 +1,4 @@
+import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { CameraType, CameraView, useCameraPermissions } from "expo-camera";
 import { useState } from "react";
@@ -10,6 +11,7 @@ const styles = Style();
 
 export default function ScanScreen() {
 	const [facing, setFacing] = useState<CameraType>('back');
+	const [enableTorch, setEnableTorch] = useState(false);
 	const [permission, requestPermission] = useCameraPermissions();
 	const navigation = useNavigation<StackNavigationProps>();
 
@@ -40,6 +42,10 @@ export default function ScanScreen() {
 		setFacing(current => (current === 'back' ? 'front' : 'back'));
 	}
 
+	function toggleTorch() {
+		setEnableTorch(current => !current);
+	}
+
 	return (
 		<SafeAreaView style={styles.container}>
 			<View style={styles.container}>
@@ -47,6 +53,7 @@ export default function ScanScreen() {
 				<CameraView
 					style={styles.camera}
 					facing={facing}
+					enableTorch={enableTorch}
 					barcodeScannerSettings={{
 						barcodeTypes: ["ean13", "ean8"]
 					}}
@@ -56,7 +63,18 @@ export default function ScanScreen() {
 				/>
 				<View style={styles.buttonContainer}>
 					<TouchableOpacity style={styles.cameraButton} onPress={toggleCameraFacing}>
-						<Text style={styles.flipCameraButtonText}>Flip Camera</Text>
+						<Ionicons
+							name="camera-reverse"
+							size={32}
+							color="white"
+						/>
+					</TouchableOpacity>
+					<TouchableOpacity style={styles.cameraButton} onPress={toggleTorch}>
+						<Ionicons
+							name={enableTorch ? "flashlight" : "flashlight-outline"}
+							size={32}
+							color="white"
+						/>
 					</TouchableOpacity>
 				</View>
 			</View>

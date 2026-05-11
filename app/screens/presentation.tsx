@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ActivityIndicator, Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -14,6 +14,14 @@ export default function PresentationScreen({ route }: any) {
 	const [loading, setLoading] = useState(true);
 	const [apiError, setApiError] = useState<string | null>(null);
 	const [product, setProduct] = useState<any | null>(null);
+	const [imageLoading, setImageLoading] = useState(true);
+	const imageSource = useMemo(() => {
+		if (!product?.image_url) {
+			return null;
+		}
+
+		return { uri: product.image_url };
+	}, [product?.image_url]);
 
 	useEffect(() => {
 		const fetchProductDetails = async () => {
@@ -54,6 +62,10 @@ export default function PresentationScreen({ route }: any) {
 		};
 		fetchProductDetails();
 	}, []);
+
+	useEffect(() => {
+		setImageLoading(Boolean(imageSource));
+	}, [imageSource]);
 
 	if (loading) {
 		return (
@@ -96,11 +108,22 @@ export default function PresentationScreen({ route }: any) {
 				<BackButton style={styles.backButton} onClick={() => { navigation.goBack() }} />
 				<ScrollView contentContainerStyle={styles.scrollContentContainer}>
 					{/* Product Image */}
-					{product.image_url && (
-						<Image
-							source={{ uri: product.image_url }}
-							style={styles.productImage}
-						/>
+					{imageSource && (
+						<View style={styles.imageLoadingContainer}>
+							<Image
+								source={imageSource}
+								style={styles.productImage}
+								onLoadEnd={() => setImageLoading(false)}
+								onError={() => setImageLoading(false)}
+							/>
+							{imageLoading && (
+								<ActivityIndicator
+									size="large"
+									color="#8f8f8f"
+									style={styles.imageSpinner}
+								/>
+							)}
+						</View>
 					)}
 
 					{/* Product Name */}
@@ -120,63 +143,69 @@ export default function PresentationScreen({ route }: any) {
 						Nutrition Facts
 					</Text>
 
-					<View style={styles.nutritionBox}>
-						{/* Energy */}
-						{product.nutriments?.energy_kcal && (
-							<Text style={[styles.message, styles.nutritionItem]}>
-								• Energy: {Math.round(product.nutriments.energy_kcal)} kcal
-							</Text>
-						)}
+					{product.nutriments ? (
+						<View style={styles.nutritionBox}>
+							{/* Energy */}
+							{product.nutriments?.energy_kcal && (
+								<Text style={[styles.message, styles.nutritionItem]}>
+									• Energy: {Math.round(product.nutriments.energy_kcal)} kcal
+								</Text>
+							)}
 
-						{/* Protein */}
-						{product.nutriments?.proteins && (
-							<Text style={[styles.message, styles.nutritionItem]}>
-								• Protein: {product.nutriments.proteins}g
-							</Text>
-						)}
+							{/* Protein */}
+							{product.nutriments?.proteins && (
+								<Text style={[styles.message, styles.nutritionItem]}>
+									• Protein: {product.nutriments.proteins}g
+								</Text>
+							)}
 
-						{/* Fat */}
-						{product.nutriments?.fat && (
-							<Text style={[styles.message, styles.nutritionItem]}>
-								• Fat: {product.nutriments.fat}g
-							</Text>
-						)}
+							{/* Fat */}
+							{product.nutriments?.fat && (
+								<Text style={[styles.message, styles.nutritionItem]}>
+									• Fat: {product.nutriments.fat}g
+								</Text>
+							)}
 
-						{/* Carbohydrates */}
-						{product.nutriments?.carbohydrates && (
-							<Text style={[styles.message, styles.nutritionItem]}>
-								• Carbohydrates: {product.nutriments.carbohydrates}g
-							</Text>
-						)}
+							{/* Carbohydrates */}
+							{product.nutriments?.carbohydrates && (
+								<Text style={[styles.message, styles.nutritionItem]}>
+									• Carbohydrates: {product.nutriments.carbohydrates}g
+								</Text>
+							)}
 
-						{/* Fiber */}
-						{product.nutriments?.fiber && (
-							<Text style={[styles.message, styles.nutritionItem]}>
-								• Fiber: {product.nutriments.fiber}g
-							</Text>
-						)}
+							{/* Fiber */}
+							{product.nutriments?.fiber && (
+								<Text style={[styles.message, styles.nutritionItem]}>
+									• Fiber: {product.nutriments.fiber}g
+								</Text>
+							)}
 
-						{/* Sugars */}
-						{product.nutriments?.sugars && (
-							<Text style={[styles.message, styles.nutritionItem]}>
-								• Sugars: {product.nutriments.sugars}g
-							</Text>
-						)}
+							{/* Sugars */}
+							{product.nutriments?.sugars && (
+								<Text style={[styles.message, styles.nutritionItem]}>
+									• Sugars: {product.nutriments.sugars}g
+								</Text>
+							)}
 
-						{/* Salt */}
-						{product.nutriments?.salt && (
-							<Text style={[styles.message, styles.nutritionItem]}>
-								• Salt: {product.nutriments.salt}g
-							</Text>
-						)}
+							{/* Salt */}
+							{product.nutriments?.salt && (
+								<Text style={[styles.message, styles.nutritionItem]}>
+									• Salt: {product.nutriments.salt}g
+								</Text>
+							)}
 
-						{/* Sodium */}
-						{product.nutriments?.sodium && (
-							<Text style={[styles.message, styles.nutritionItem]}>
-								• Sodium: {product.nutriments.sodium}mg
-							</Text>
-						)}
-					</View>
+							{/* Sodium */}
+							{product.nutriments?.sodium && (
+								<Text style={[styles.message, styles.nutritionItem]}>
+									• Sodium: {product.nutriments.sodium}mg
+								</Text>
+							)}
+						</View>
+					) : (
+						<Text style={[styles.message, styles.nutritionItem]}>
+							Nutrition information not available.
+						</Text>
+					)}
 
 					{/* Barcode */}
 					<Text style={[styles.message, styles.barcodeText]}>
