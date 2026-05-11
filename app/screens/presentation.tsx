@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Text, View } from "react-native";
+import { ActivityIndicator, Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import BackButton from "../resources/back_button";
@@ -22,7 +22,7 @@ export default function PresentationScreen({ route }: any) {
 				const data = await response.json();
 				if (!response.ok) {
 					if (response.status !== 404) throw new Error(`HTTP error: ${response.status} ${response.statusText}`);
-					
+
 					if (!data) {
 						throw new Error(`HTTP error: ${response.status} ${response.statusText}`);
 					}
@@ -94,9 +94,95 @@ export default function PresentationScreen({ route }: any) {
 		<SafeAreaView style={styles.container}>
 			<View style={styles.container}>
 				<BackButton style={styles.backButton} onClick={() => { navigation.goBack() }} />
-				<Text style={styles.message}>This is the presentation screen, here goes item details.</Text>
-				<Text style={styles.message}>Scanned barcode is {barcode}</Text>
-				<Text style={styles.message}>Fetched item name is {product ? product.product_name : "Loading..."}</Text>
+				<ScrollView contentContainerStyle={styles.scrollContentContainer}>
+					{/* Product Image */}
+					{product.image_url && (
+						<Image
+							source={{ uri: product.image_url }}
+							style={styles.productImage}
+						/>
+					)}
+
+					{/* Product Name */}
+					<Text style={[styles.message, styles.productName]}>
+						{product.product_name || "Unknown Product"}
+					</Text>
+
+					{/* Brand */}
+					{product.brands && (
+						<Text style={[styles.message, styles.brandText]}>
+							Brand: {product.brands}
+						</Text>
+					)}
+
+					{/* Nutrition Facts Section */}
+					<Text style={[styles.message, styles.nutritionTitle]}>
+						Nutrition Facts
+					</Text>
+
+					<View style={styles.nutritionBox}>
+						{/* Energy */}
+						{product.nutriments?.energy_kcal && (
+							<Text style={[styles.message, styles.nutritionItem]}>
+								• Energy: {Math.round(product.nutriments.energy_kcal)} kcal
+							</Text>
+						)}
+
+						{/* Protein */}
+						{product.nutriments?.proteins && (
+							<Text style={[styles.message, styles.nutritionItem]}>
+								• Protein: {product.nutriments.proteins}g
+							</Text>
+						)}
+
+						{/* Fat */}
+						{product.nutriments?.fat && (
+							<Text style={[styles.message, styles.nutritionItem]}>
+								• Fat: {product.nutriments.fat}g
+							</Text>
+						)}
+
+						{/* Carbohydrates */}
+						{product.nutriments?.carbohydrates && (
+							<Text style={[styles.message, styles.nutritionItem]}>
+								• Carbohydrates: {product.nutriments.carbohydrates}g
+							</Text>
+						)}
+
+						{/* Fiber */}
+						{product.nutriments?.fiber && (
+							<Text style={[styles.message, styles.nutritionItem]}>
+								• Fiber: {product.nutriments.fiber}g
+							</Text>
+						)}
+
+						{/* Sugars */}
+						{product.nutriments?.sugars && (
+							<Text style={[styles.message, styles.nutritionItem]}>
+								• Sugars: {product.nutriments.sugars}g
+							</Text>
+						)}
+
+						{/* Salt */}
+						{product.nutriments?.salt && (
+							<Text style={[styles.message, styles.nutritionItem]}>
+								• Salt: {product.nutriments.salt}g
+							</Text>
+						)}
+
+						{/* Sodium */}
+						{product.nutriments?.sodium && (
+							<Text style={[styles.message, styles.nutritionItem]}>
+								• Sodium: {product.nutriments.sodium}mg
+							</Text>
+						)}
+					</View>
+
+					{/* Barcode */}
+					<Text style={[styles.message, styles.barcodeText]}>
+						Barcode: {barcode}
+					</Text>
+				</ScrollView>
 			</View>
 		</SafeAreaView>
 	);

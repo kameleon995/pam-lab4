@@ -55,7 +55,7 @@ export default function ScanScreen() {
 					}}
 				/>
 				<View style={styles.buttonContainer}>
-					<TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
+					<TouchableOpacity style={styles.cameraButton} onPress={toggleCameraFacing}>
 						<Text style={styles.flipCameraButtonText}>Flip Camera</Text>
 					</TouchableOpacity>
 				</View>
