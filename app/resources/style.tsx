@@ -159,6 +159,20 @@ export default function Style() {
 		buttonSpacing: {
 			marginTop: 18,
 		},
+		// Banner Styles
+		appBanner: {
+			backgroundColor: '#007AFF',
+			paddingVertical: 24,
+			paddingHorizontal: 16,
+			alignItems: 'center',
+			marginBottom: 32,
+		},
+		appBannerText: {
+			fontSize: 32,
+			fontWeight: '700',
+			color: '#ffffff',
+			letterSpacing: 0.5,
+		},
 	});
 	return styles;
 }

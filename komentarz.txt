@@ -1,8 +1,8 @@
 wybrana została aplikacja 4.7 - skaner żywności
 
 todo: 
-- "upiększenie" UI kamery - ramka na kod
-- kosmetyka home screen
+V "upiększenie" UI kamery - ramka na kod
+V kosmetyka home screen
 V poprawa UI przyznania uprawnień (safeareaview)
 V implementacja skanowania kodów
 V skończyć implementować odpytywanie endpointu: 
