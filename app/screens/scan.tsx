@@ -61,6 +61,7 @@ export default function ScanScreen() {
 							barcodeTypes: ["ean13", "ean8"]
 						}}
 						onBarcodeScanned={(event) => {
+							setEnableTorch(false)
 							navigation.navigate('ItemPresentation', { barcode: event.data });
 						}} />
 					<Image
